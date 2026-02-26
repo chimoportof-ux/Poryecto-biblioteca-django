@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'bookManager/bookLis.css'%}" />
+  </head>
+  <body>
+    <div class="log">
+      <p>Logged In as: {{ user.username }}</p>
+      <form action="{% url 'logoutuser' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="boton">Logout</button>
+      </form>
+    </div>
+    <div class="titulo">
+      <h1>BookList</h1>
+      <a href="{% url 'createBook' %}" class="boton">Add Book</a>
+      <br />
+      <a href="{% url 'createCategory' %}" class="boton">Add Category</a>
+    </div>
+    {% for book in books %}
+    <div class="container">
+      <h2>{{ book.title }}</h2>
+
+      <div class="categoria">
+        <h4>Category:</h4>
+        {% for category in book.category.all %}
+        <span>{{ category.name }}</span>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+
+      <a href="{% url 'book-detail-page' book.id %}" class="boton">Details</a>
+    </div>
+    {% endfor %}
+    <br />
+    <br />
+    <a href="{% url 'categoryList' %}" class="boton">List by Category</a>
+    <br />
+    <br />
+  </body>
+</html>

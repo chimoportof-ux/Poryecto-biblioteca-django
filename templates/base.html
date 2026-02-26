@@ -1,0 +1,30 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'bookManager/home.css'%}"/>
+</head>
+<body>
+    <br>
+    {% if user.is_authenticated %} 
+        Logged In as: {{ user.username }}
+        <br>
+        <br> 
+        <a href="{% url 'bookList'%}" class="boton">List of Books</a>
+        <br>
+        <br>
+        <form action="{% url 'logoutuser' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="boton">Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url 'signupuser' %}" class="boton">Sign up</a>
+        <a href="{% url 'loginuser' %}" class="boton">Login</a>
+    {% endif %}
+    <br></br>
+    {%block content %}{% endblock %}
+</body>
+</html>

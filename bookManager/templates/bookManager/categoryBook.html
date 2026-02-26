@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'bookManager/categoryBook.css'%}" />
+  </head>
+  <body>
+    <div class="log">
+      <p>Logged In as: {{ user.username }}</p>
+      <form action="{% url 'logoutuser' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="boton">Logout</button>
+      </form>
+    </div>
+    <h1>{{category.name}}</h1>
+    {% for books in books %}
+    <div class="container">
+      <h2>{{ books.title }}</h2>
+      <a href="{% url 'book-detail-page' books.id%}" class="boton">Details</a>
+    </div>
+    {% endfor %}
+    <br />
+    <br />
+    <a href="/bookList" class="boton">List of Books</a>
+    <a href="{% url 'categoryList' %}" class="boton">List by Category</a>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'bookManager/deleteBook.css'%}" />
+  </head>
+  <body>
+    <div class="log">
+      <p>Logged In as: {{ user.username }}</p>
+      <form action="{% url 'logoutuser' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="boton">Logout</button>
+      </form>
+    </div>
+    <h2>¿Are you sure you want to delete?</h2>
+    <p>
+      <strong>{{ book.title }}</strong><br />
+      Author: {{ book.author }}
+    </p>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="boton">Delete</button>
+      <a href="{% url 'book-detail-page' book.id %}" class="boton">Cancel</a>
+    </form>
+  </body>
+</html>

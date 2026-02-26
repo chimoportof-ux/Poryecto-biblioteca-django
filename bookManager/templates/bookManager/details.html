@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'bookManager/detail.css'%}" />
+  </head>
+  <body>
+    <div class="log">
+      <p>Logged In as: {{ user.username }}</p>
+      <form action="{% url 'logoutuser' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="boton">Logout</button>
+      </form>
+    </div>
+    <div class="bigContainer">
+      <div class="container">
+        <h1 class="titulo">{{ books.title }}</h1>
+        <img src="{{ books.image.url }}" />
+        <div class="author">
+          <h4>Author:</h4>
+          <span>{{ books.author }}</span>
+        </div>
+        <div class="resume">
+          <h4>Resume:</h4>
+          <span>{{ books.resume }}</span>
+        </div>
+        <div class="categoria">
+          <h4>Category:</h4>
+          {% for category in books.category.all %}
+          <span>{{ category.name }}</span>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div class="user">
+          <h4>Added by:</h4>
+          <span>{{ books.user }}</span>
+        </div>
+        <br />
+        {% if books.user == user %}
+        <a href="{% url 'deleteBook' books.id %}" class="boton">Delete</a>
+        <a href="{% url 'modifyBook' books.id %}" class="boton">Modify</a>
+        {% endif %}
+      </div>
+      <br />
+    </div>
+    <br />
+    <a href="/bookList" class="boton">List of Books</a>
+    <a href="{% url 'categoryList' %}" class="boton">List by Category</a>
+    <br />
+    <br />
+  </body>
+</html>
