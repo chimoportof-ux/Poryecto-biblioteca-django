@@ -17,7 +17,7 @@ COPY . /code/
 EXPOSE 8000
 
 # Comando para arrancar Django con Gunicorn
-CMD ["gunicorn", "django_final_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && gunicorn django_final_project.wsgi:application --bind 0.0.0.0:8000"]
 
 # Ejecuta el comando para crear un nuevo proyecto Django
 # RUN django-admin startproject password_generator .
